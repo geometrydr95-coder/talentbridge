@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalentBridge</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0f1117;
+            color: #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1a1d27;
+            border-bottom: 1px solid #2e3250;
+        }
+
+        .navbar-brand {
+            color: #7c6aff !important;
+            font-weight: 600;
+        }
+
+        .nav-link {
+            color: #a0a0b0 !important;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #7c6aff !important;
+        }
+
+        /* Cards */
+        .card {
+            background-color: #1a1d27;
+            border: 1px solid #2e3250;
+            border-radius: 15px;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #7c6aff;
+            transform: translateY(-5px);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #7c6aff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #6a5af0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1d27;
+            border-top: 1px solid #2e3250;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        .footer-text {
+            color: #a0a0b0;
+        }
+
+        /* Badges */
+        .badge-sport {
+            background-color: #ff6a3d;
+        }
+
+        .badge-tech {
+            background-color: #3daaff;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ✅ NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="bi bi-stars"></i> TalentBridge
+        </a>
+
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'talent_list' %}">
+                        <i class="bi bi-collection-play"></i> Talents
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'scholarship_list' %}">
+                        <i class="bi bi-mortarboard"></i> Scholarships
+                    </a>
+                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2 px-3" href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ✅ MAIN CONTENT -->
+<div class="container mt-5">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- ✅ FOOTER -->
+<footer class="text-center">
+    <div class="container">
+        <p class="footer-text mb-0">
+            © 2026 TalentBridge — Connecting Talent to Opportunity
+        </p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-4">
+    <i class="bi bi-mortarboard" style="color:#7c6aff;"></i> Available Scholarships
+</h2>
+
+<!-- FILTERS -->
+<div class="card p-3 mb-4">
+    <form method="GET" class="row">
+
+        <div class="col-md-4 mb-2">
+            <input type="text" name="q" placeholder="Search scholarships..."
+                   class="form-control bg-dark text-light border-secondary"
+                   value="{{ request.GET.q }}">
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <select name="category" class="form-select bg-dark text-light border-secondary">
+                <option value="">All Categories</option>
+                <option value="sport" {% if request.GET.category == "sport" %}selected{% endif %}>Sport</option>
+                <option value="tech" {% if request.GET.category == "tech" %}selected{% endif %}>Tech</option>
+            </select>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <button class="btn btn-primary w-100">
+                <i class="bi bi-search"></i> Filter
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<!-- SCHOLARSHIP GRID -->
+<div class="row">
+    {% for scholarship in scholarships %}
+    <div class="col-md-4 mb-4">
+        <div class="card p-3 h-100">
+
+            <h5>{{ scholarship.title }}</h5>
+
+            <p class="text-muted small">
+                {{ scholarship.description|truncatewords:15 }}
+            </p>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                {% if scholarship.talent_category == "sport" %}
+                    <span class="badge badge-sport">Sport</span>
+                {% else %}
+                    <span class="badge badge-tech">Tech</span>
+                {% endif %}
+
+                <small class="text-muted">
+                    <i class="bi bi-calendar"></i>
+                    Deadline: {{ scholarship.deadline|date:"M d, Y" }}
+                </small>
+            </div>
+
+            <a href="{% url 'scholarship_detail' scholarship.id %}" class="btn btn-primary mt-auto">
+                View Details
+            </a>
+
+        </div>
+    </div>
+    {% empty %}
+        <p class="text-muted">No scholarships available at the moment.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

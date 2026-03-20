@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+
+    <!-- ✅ LEFT: MEDIA -->
+    <div class="col-md-6 mb-4">
+
+        <div class="card p-3">
+
+            {% if talent.video %}
+                <video controls class="w-100 rounded mb-3">
+                    <source src="{{ talent.video.url }}" type="video/mp4">
+                </video>
+            {% elif talent.image %}
+                <img src="{{ talent.image.url }}" class="img-fluid rounded mb-3">
+            {% else %}
+                <p class="text-muted">No media available</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- ✅ RIGHT: DETAILS -->
+    <div class="col-md-6 mb-4">
+
+        <div class="card p-4">
+
+            <h2>{{ talent.title }}</h2>
+
+            <p class="text-muted">
+                Uploaded by <strong>{{ talent.student.username }}</strong>
+            </p>
+
+            {% if talent.category == "sports" %}
+                <span class="badge badge-sport mb-3">Sports</span>
+            {% else %}
+                <span class="badge badge-tech mb-3">Tech</span>
+            {% endif %}
+
+            <p>
+                {{ talent.description }}
+            </p>
+
+            <hr>
+
+            <p class="text-muted small">
+                Posted on {{ talent.created_at|date:"F d, Y" }}
+            </p>
+
+            {% if user.is_authenticated %}
+                <a href="#" class="btn btn-primary mt-3">
+                    <i class="bi bi-send"></i> Contact / Apply
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary mt-3">
+                    Login to interact
+                </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
